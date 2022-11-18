@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header (title='Felhasználói adatok')"></div>
+
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Név</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.felh}">Mark</td>
+            <td th:text="${user.email}">Mark</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <form  th:action="@{/users/changePwd}" method="post">
+        <div class="form-group">
+            <label for="oldpwd">Jelszó</label>
+            <input type="password" name="oldpwd" class="form-control" id="oldpwd" placeholder="Régi Jelszó" >
+        </div>
+        <div class="form-group">
+            <label for="newpwd1">Password</label>
+            <input type="password" name="newpwd1" class="form-control" id="newpwd1" placeholder="Új Jelszó">
+        </div>
+        <div class="form-group">
+            <label for="newpwd2">Password</label>
+            <input type="password" name="newpwd2" class="form-control" id="newpwd2" placeholder="Új Jelszó Megerősítése">
+        </div>
+        <div class="form-group">
+            <label for="newname">Felhasználó név:</label>
+            <input type="text" name="newname" class="form-control" id="newname" placeholder="Új felhasználó név">
+        </div>
+        <div class="form-group">
+            <label for="newemail">Email:</label>
+            <input type="text" name="newemail" class="form-control" id="newemail" placeholder="Új email cím">
+        </div>
+        <button type="submit" class="btn btn-primary">Módosítás</button>
+    </form>
+</div>
+
+<div class="container">
+    <form  th:action="@{/users/newLakas}" method="post">
+        <div class="form-group">
+            <label for="lakasNev">Lakás név</label>
+            <input type="text" name="lakasNev" class="form-control" id="lakasNev" placeholder="Lakás neve:" >
+        </div>
+        <button type="submit" class="btn btn-primary">Hozzáad</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+.myborder{
+    border-radius: 24px;
+    background: #dcdde4;
+    box-shadow:  5px 5px 8px #58585b,-5px -5px 8px #ffffff;
+}
+.navcolor{
+    background-color: #272343;
+}
+.textcolor{
+    color: #ffd803;
+}

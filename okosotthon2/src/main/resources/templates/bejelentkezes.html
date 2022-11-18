@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header (title='Create Users')"></div>
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+<div class="row justify-content-center align-items-center">
+            <div class="form-group col-sm-2 shadow p-3 mb-5 bg-body rounded h-100">
+                <form action="#" th:action="@{/users/loginUser}" method="post" th:object="${users}">
+                    <label>Felhasználó név</label>
+                    <input type="text" name="username" class="form-control" placeholder="Felhasználónév" th:field="*{felh}">
+                    <label>Jelszó</label>
+                    <input type="password" name="pwd" class="form-control" placeholder="Jelszó" th:field="*{jelszo}">
+                    <button type="submit" class="btn btn-dark mt-4" name="submit">Bejelentkezés</button>
+                    <button type="submit" class="btn btn-dark mt-4" name="submit1">Regisztráció</button>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

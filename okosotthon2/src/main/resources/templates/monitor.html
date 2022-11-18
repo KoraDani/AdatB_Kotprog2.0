@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/header :: header (title='Monitor')"></div>
+
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+
+    <div style="display: flex; justify-content: space-around; flex-wrap:wrap;">
+        <!--m-1 bg-gradient p-2 shadow p-3 mb-5 bg-body rounded-->
+        <div class="m-1 p-3 myborder" th:each="sz : ${szobak}">
+            <Label>Szoba: <p th:text="${sz.szobanev}"></p></Label> <br>
+            <label>Hömérséklet: <p th:text="${sz.adatok.homerseklet}"></p></label><br>
+            <label>Páratartalom: <p th:text="${sz.adatok.paratartalom}"></p></label><br>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-around; flex-wrap:wrap;">
+        <!--m-1 bg-gradient p-2 shadow p-3 mb-5 bg-body rounded-->
+        <div class="m-1 p-3 myborder" th:each="esz : ${eszkozok}">
+            <Label>Szoba: <p th:text="${esz.szobaNev}"></p></Label> <br>
+            <label>Hömérséklet: <p th:text="${esz.eszkozNev}"></p></label><br>
+            <label>Páratartalom: <p th:text="${esz.bekiE}"></p></label><br>
+        </div>
+    </div>
+</body>
+
+</html>

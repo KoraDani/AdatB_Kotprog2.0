@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header (title='Regisztráció')"></div>
+<body>
+<div th:insert="fragments/login_out :: loggedOut"></div>
+<div class="row justify-content-center align-items-center">
+    <div class="form-group col-sm-2 shadow p-3 mb-5 bg-body rounded h-100">
+        <form action="#" th:action="@{/users/regiszt_process}" method="post" th:object="${users}">
+            <label>Felhasználó név</label>
+            <input type="text" class="form-control" placeholder="Felhasználónév" name="user" required th:field="*{felh}">
+            <label for="pwd1">Jelszó</label>
+            <input type="password" class="form-control" placeholder="Jelszó" name="pwd1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" id="pwd1" required th:field="*{jelszo}">
+            <label for="email">Email cím</label>
+            <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email cím" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email" name="email" required th:field="*{email}">
+            <label for="pwd2">Jelszó megerősítése</label>
+            <input type="password" class="form-control" placeholder="Jelszó megerősítése" name="pwd2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" id="pwd2" required>
+            <button type="submit" class="btn btn-dark mt-4" name="regiszt">Regisztráció</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

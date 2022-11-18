@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org">
+<div th:replace="fragments/header :: header (title='Monitor')"></div>
+
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Név</th>
+            <th scope="col">Jelszo</th>
+            <th scope="col">Email</th>
+            <th scope="col">Lakas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.felh}">Mark</td>
+            <td th:text="${user.jelszo}">Mark</td>
+            <td th:text="${user.email}">Mark</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

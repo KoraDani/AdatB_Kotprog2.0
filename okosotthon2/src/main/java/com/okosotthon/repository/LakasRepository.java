@@ -24,7 +24,7 @@ public class LakasRepository {
     }
 
     public List<Lakas> getAllUserLakas(int felhid){
-        String sql = "Select * from lakas Where felh_id="+felhid;
+        String sql = "Select lakas.id,lakas.lakasnev from lakas INNER JOIN tartozik on tartozik.lakas_id=lakas.id WHERE felh_id="+felhid;
         return jdbc.query(sql,(rs,i)-> new Lakas(
                 rs.getInt("id"),
                 rs.getString("lakasnev")

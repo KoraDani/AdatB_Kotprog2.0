@@ -69,8 +69,8 @@ public class SzobaService {
        return szobaRepository.getAllUserSzoba(userService.getActualUserId());
     }
 
-    public List<Szoba> getAllUserSzobaAdat(int felhid){
-        return szobaRepository.getAllUserSzobaAdat(felhid);
+    public List<Szoba> getAllUserSzobaAdat(int lakasid){
+        return szobaRepository.getAllUserSzobaAdat(lakasid);
     }
 
     public Boolean addNewSzoba(String szobaNev, int terulet) {

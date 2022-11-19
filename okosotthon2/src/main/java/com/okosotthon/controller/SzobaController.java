@@ -2,12 +2,14 @@ package com.okosotthon.controller;
 
 import com.okosotthon.domain.Users;
 import com.okosotthon.service.EszkozokSzervice;
+import com.okosotthon.service.LakasService;
 import com.okosotthon.service.SzobaService;
 import com.okosotthon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,6 +20,7 @@ public class SzobaController {
     private SzobaService szobaService;
     private UserService userService;
     private EszkozokSzervice eszkozokSzervice;
+    private LakasService lakasService;
 
     //region Service
     @Autowired
@@ -32,6 +35,10 @@ public class SzobaController {
     public void setEszkozokSzervice(EszkozokSzervice eszkozokSzervice) {
         this.eszkozokSzervice = eszkozokSzervice;
     }
+    @Autowired
+    public void setLakasService(LakasService lakasService) {
+        this.lakasService = lakasService;
+    }
     //endregion
 
 
@@ -42,11 +49,13 @@ public class SzobaController {
 
         //region Bejelentkezett felhasználó szobáinak kiiratása
     @GetMapping("/monitor")
-    public String listSzoba(Model model){
-        int lid = userService.getActualUserId();
-        System.out.println(lid + " lakasid");
-        model.addAttribute("szobak", szobaService.getAllUserSzobaAdat(lid));
+    public String listSzoba( Model model){
+        int userId = userService.getActualUserId();
+        System.out.println(userId + " lakasid");
+        model.addAttribute("lakas",lakasService.getUserLakas(userId));
+        model.addAttribute("szobak", szobaService.getAllUserSzobaAdat(userId));
         return "monitor";
     }
     //endregion
+
 }

@@ -38,7 +38,7 @@ public class EszkozRepository {
     }
 
     public int delete(int id){
-        String sql = "DELETE FROM eszkozok WHERE eszkozok.id="+id;
+        String sql = "DELETE FROM eszkozok WHERE eszkozok.szobaID="+id;
         return jdbc.update(sql);
     }
 }

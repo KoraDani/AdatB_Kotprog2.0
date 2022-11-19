@@ -1,0 +1,17 @@
+<!doctype html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org">
+<div th:replace="fragments/header :: header (title='Adatok')"></div>
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+<form th:action="@{/meresek/szobakAdd}" method="post" th:each="szoba : ${szobak}">
+<!--    <input type="hidden" th:field="*{szoba.id}">-->
+        Szoba neve: <input type="text" id="szNev" name="szNev" th:value="*{szoba.szobanev}">
+        Eszköz neve: <input type="text" id="eszNev" name="eszNev" th:value="*{szoba.eszkozok.eszkoznev}">
+        Fűtés típusa: <input type="text" id="futesT" name="futesT" th:value="*{szoba.futes.futestipus}">
+        Szoba területe: <input type="text" id="terulete" name="terulete" th:value="*{szoba.terulet}">
+        Hozzáadás: <input type="submit" id="addSzoba" name="Megváltoztat">
+</form>
+</body>
+</html>

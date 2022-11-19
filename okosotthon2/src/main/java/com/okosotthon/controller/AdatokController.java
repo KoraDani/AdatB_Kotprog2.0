@@ -5,10 +5,8 @@ import com.okosotthon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/meresek")
@@ -42,11 +40,34 @@ public class AdatokController {
             @RequestParam("szNev") String szobaNev,
             @RequestParam("eszNev") String eszkozNev,
             @RequestParam("terulete") int terulet,
-            @RequestParam("futesT") String futesT
+            @RequestParam("futesT") String futesT,
+            Szoba szoba
     ){
             szobaService.addNewSzoba(szobaNev,terulet);
             eszkozokSzervice.addNewEszkoz(szobaNev,eszkozNev);
             futesService.addNewFutes(szobaNev, futesT);
         return "redirect:/meresek/szobak";
     }
+
+    @GetMapping("/szobak/delete/{id}")
+    public String deletSzoba(@PathVariable int id){
+        szobaService.deleteSzoba(id);
+        return "redirect:/meresek/szobak";
+    }
+    @GetMapping("/szobak/edit/{id}")
+    public String editSzobaFrom(@PathVariable long id, Model model){
+        Szoba szoba = szobaService.getSelectedSzoba(id).get(0);
+        model.addAttribute("szobak", szoba);
+        return "szobaEdit";
+    }
+
+    //TODO updatere kicserélni
+    @PostMapping("/szobak/edit/{id}")
+    public String editSzoba(Szoba szoba, BindingResult result){
+        szobaService.addNewSzoba(szoba.getSzobanev(),szoba.getTerulet());
+        eszkozokSzervice.addNewEszkoz(szoba.getSzobanev(),szoba.getEszkozok().getEszkoznev());
+        futesService.addNewFutes(szoba.getSzobanev(),szoba.getFutes().getFutestipus());
+        return "szoba-list";
+    }
+
 }

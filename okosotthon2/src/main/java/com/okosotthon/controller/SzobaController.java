@@ -1,17 +1,16 @@
 package com.okosotthon.controller;
 
+import com.okosotthon.domain.Lakas;
 import com.okosotthon.domain.Users;
 import com.okosotthon.service.EszkozokSzervice;
 import com.okosotthon.service.LakasService;
 import com.okosotthon.service.SzobaService;
 import com.okosotthon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/szobak")
@@ -51,11 +50,8 @@ public class SzobaController {
     @GetMapping("/monitor")
     public String listSzoba( Model model){
         int userId = userService.getActualUserId();
-        System.out.println(userId + " lakasid");
-        model.addAttribute("lakas",lakasService.getUserLakas(userId));
         model.addAttribute("szobak", szobaService.getAllUserSzobaAdat(userId));
         return "monitor";
     }
     //endregion
-
 }

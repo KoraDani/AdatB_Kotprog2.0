@@ -80,4 +80,12 @@ public class SzobaService {
             return false;
         }
     }
+
+    public void deleteSzoba(int id) {
+        szobaRepository.delete(id);
+    }
+
+    public List<Szoba> getSelectedSzoba(long id) {
+        return szobaRepository.getSelectedSzoba(id);
+    }
 }

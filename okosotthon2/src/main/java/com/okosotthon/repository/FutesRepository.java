@@ -26,7 +26,7 @@ public class FutesRepository {
     }
 
     public int delete(int id){
-        String sql = "DELETE FROM adatok WHERE adatok.id="+id;
+        String sql = "DELETE FROM adatok WHERE adatok.szobaID="+id;
         return jdbc.update(sql);
     }
 }

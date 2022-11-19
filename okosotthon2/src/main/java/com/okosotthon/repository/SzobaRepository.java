@@ -10,6 +10,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public class SzobaRepository {
+    private EszkozRepository eszkozRepository;
+    private FutesRepository futesRepository;
+    @Autowired
+    public void setEszkozRepository(EszkozRepository eszkozRepository) {
+        this.eszkozRepository = eszkozRepository;
+    }
+    @Autowired
+    public void setFutesRepository(FutesRepository futesRepository) {
+        this.futesRepository = futesRepository;
+    }
 
     private JdbcTemplate jdbc;
 
@@ -39,8 +49,9 @@ public class SzobaRepository {
 //    }
 
     public List<Szoba> getAllUserSzoba(int felhid){
-        String sql = "Select szoba.szobaNev, eszkozok.eszkozNev, futes.futesTipus, szoba.terulet from szoba INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id INNER JOIN eszkozok ON szoba.id=eszkozok.szobaID INNER JOIN futes ON szoba.id=futes.szobaID where tartozik.felh_id="+felhid;
+        String sql = "Select szoba.id, szoba.szobaNev, eszkozok.eszkozNev, futes.futesTipus, szoba.terulet from szoba INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id INNER JOIN eszkozok ON szoba.id=eszkozok.szobaID INNER JOIN futes ON szoba.id=futes.szobaID where tartozik.felh_id="+felhid;
         return jdbc.query(sql,(rs,i)-> new Szoba(
+                rs.getInt("id"),
                 rs.getString("szobaNev"),
                 rs.getString("eszkozNev"),
                 rs.getString("futesTipus"),
@@ -85,7 +96,20 @@ public class SzobaRepository {
     }
 
     public int delete(int id){
-        String sql = "DELETE FROM szoba WHERE szoba.id="+id;
+        String sql = "DELETE FROM szoba WHERE szoba.id="+id+"; ";
+        eszkozRepository.delete(id);
+        futesRepository.delete(id);
         return jdbc.update(sql);
+    }
+
+    public List<Szoba> getSelectedSzoba(long id) {
+        String sql = "Select szoba.id, szoba.szobaNev, eszkozok.eszkozNev, futes.futesTipus, szoba.terulet from szoba INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id INNER JOIN eszkozok ON szoba.id=eszkozok.szobaID INNER JOIN futes ON szoba.id=futes.szobaID where szoba.id="+id;
+        return jdbc.query(sql,(rs,i)-> new Szoba(
+                rs.getInt("id"),
+                rs.getString("szobaNev"),
+                rs.getString("eszkozNev"),
+                rs.getString("futesTipus"),
+                rs.getInt("terulet")
+        ));
     }
 }

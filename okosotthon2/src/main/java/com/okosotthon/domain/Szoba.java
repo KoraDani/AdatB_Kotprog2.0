@@ -9,7 +9,7 @@ public class Szoba {
     //TODO: nem tudom hogy működni fog e ez így de majd kiderül
     /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)*/
-    private int id;
+    private long id;
     private int lakasid;
     private String szobanev;
     private int terulet;
@@ -36,7 +36,7 @@ public class Szoba {
         this.szobanev = szobanev;
     }
 
-    public Szoba(int id, int lakasid, String szobanev, int terulet) {
+    public Szoba(long id, int lakasid, String szobanev, int terulet) {
         this.id = id;
         this.lakasid = lakasid;
         this.szobanev = szobanev;
@@ -47,7 +47,8 @@ public class Szoba {
         this.adatok = new Adatok(homerseklet,paratartlom);
     }
 
-    public Szoba(String szobanev, String eszkoznev, String futesT, int terulet){
+    public Szoba(long id,String szobanev, String eszkoznev, String futesT, int terulet){
+        this.id = id;
         this.szobanev = szobanev;
         this.eszkozok = new Eszkozok(eszkoznev);
         this.futes = new Futes(futesT);
@@ -66,7 +67,7 @@ public class Szoba {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

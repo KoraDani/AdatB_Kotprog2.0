@@ -6,7 +6,6 @@ import java.util.List;
 
 //@Entity
 public class Szoba {
-    //TODO: nem tudom hogy működni fog e ez így de majd kiderül
     /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)*/
     private long id;

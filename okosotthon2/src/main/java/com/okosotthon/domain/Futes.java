@@ -10,6 +10,7 @@ public class Futes {
     private String futestipus;
     private int fokozat;
     private int bekapcsolva;
+    private Szoba szoba;
 
     public Futes(){}
 
@@ -19,6 +20,10 @@ public class Futes {
     }
     public Futes(String futestipus){
         this.futestipus = futestipus;
+    }
+    public Futes(String eszkoznev, String szobanev){
+        this.futestipus = eszkoznev;
+        this.szoba = new Szoba(szobanev);
     }
 
     public int getId() {
@@ -51,5 +56,13 @@ public class Futes {
 
     public void setBekapcsolva(int bekapcsolva) {
         this.bekapcsolva = bekapcsolva;
+    }
+
+    public Szoba getSzoba() {
+        return szoba;
+    }
+
+    public void setSzoba(Szoba szoba) {
+        this.szoba = szoba;
     }
 }

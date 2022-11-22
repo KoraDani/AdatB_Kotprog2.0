@@ -68,4 +68,18 @@ public class UsersRepository{
 
         return new Users(uList.get(0).getId(),uList.get(0).getFelh(),uList.get(0).getJelszo(),uList.get(0).getEmail(), uList.get(0).getRole());
     }
+
+    public List<Users> getLakasUser(int id) {
+        String sql = "SELECT DISTINCT users.id, users.felh, users.jelszo, users.emial, users.role FROM users INNER JOIN tartozik ON users.id=tartozik.felh_id INNER JOIN lakas ON tartozik.lakas_id=lakas.id WHERE lakas.lakasnev IN (SELECT lakas.lakasnev FROM lakas INNER JOIN tartozik ON tartozik.lakas_id=lakas.id WHERE tartozik.felh_id = "+id+")";
+        return jdbc.query(sql,(rs,i)-> new Users(
+                rs.getInt("id"),
+                rs.getString("felh"),
+                rs.getString("jelszo"),
+                rs.getString("emial"),
+                rs.getString("role")
+        ));
+    }
+
+    public void deleteUserLakas(long id) {
+    }
 }

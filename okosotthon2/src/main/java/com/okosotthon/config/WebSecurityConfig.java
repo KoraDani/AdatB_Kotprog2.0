@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-//                        .antMatchers("/szobak/monitor").authenticated()
+                        .antMatchers("/szobak/monitor").hasAnyAuthority("ROLE_USER")
                         .anyRequest().permitAll()
                 );
 //        http.authorizeRequests()

@@ -18,12 +18,11 @@ public class EszkozRepository {
         this.jdbc = jdbc;
     }
 
-    public Eszkozok getAllUserEszkoz(long szobaId){
-        String sql = "select szoba.szobaNev, eszkozok.eszkozNev from eszkozok INNER JOIN szoba on szoba.id=eszkozok.szobaID where eszkozok.szobaID="+szobaId;
-        return jdbc.queryForObject(sql, new Eszkozok[]{}, (rs, rowNum) ->
-                new Eszkozok(
-                   rs.getString("eszkozNev"),
-                        rs.getString("szobaNev")
+    public List<Eszkozok> getAllUserEszkoz(long uid){
+        String sql = "select eszkozok.eszkozNev, szoba.szobaNev from eszkozok INNER JOIN szoba on szoba.id=eszkozok.szobaID INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id WHERE tartozik.felh_id="+uid;
+        return jdbc.query(sql, (rs, i) -> new Eszkozok(
+                    rs.getString("eszkozNev"),
+                    rs.getString("szobaNev")
                 ));
     }
 
@@ -32,8 +31,8 @@ public class EszkozRepository {
         return jdbc.update(sql);
     }
 
-    public int update(Eszkozok eszkozok){
-        String sql = "UPDATE eszkozok SET eszkozNev="+eszkozok.getEszkoznev();
+    public int update(long szobaid, String eszkoznev){
+        String sql = "UPDATE eszkozok SET eszkozNev='"+eszkoznev+"' WHERE szobaID="+szobaid;
         return jdbc.update(sql);
     }
 

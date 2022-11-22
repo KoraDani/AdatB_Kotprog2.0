@@ -1,0 +1,102 @@
+<!doctype html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org">
+<div th:replace="fragments/header :: header (title='Adatok')"></div>
+<body>
+<div th:insert="fragments/login_out :: loggedIn"></div>
+<!--Szobák kiiratés-->
+<div class="container w-50 p-3">
+
+
+<div class="tableFixHead">
+    <table>
+        <thead>
+        <tr>
+            <th>Szoba neve</th>
+            <th>Területe</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sz : ${szobak}">
+            <td th:text="${sz.szobanev}">szobanev</td>
+            <td th:text="${sz.terulet}">terulet</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--Eszközök kiiratása-->
+<div class="tableFixHead">
+    <table>
+        <thead>
+        <tr>
+            <th>Eszköz neve</th>
+            <th>Melyik szobához tartozik</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="esz : ${eszkozok}">
+            <td th:text="${esz.eszkoznev}">szobanev</td>
+            <td th:text="${esz.szoba.szobanev}">terulet</td>
+        </tr>
+        </tbody>
+    </table>
+</div >
+<!--Futés típus kiiratás-->
+<div class="tableFixHead">
+    <table>
+        <thead>
+        <tr>
+            <th>Eszköz neve</th>
+            <th>Melyik szobához tartozik</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sz : ${futes}">
+            <td th:text="${sz.futestipus}">szobanev</td>
+            <td th:text="${sz.szoba.szobanev}">terulet</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--Lakás Kiiratása-->
+<div class="tableFixHead">
+    <table>
+        <thead>
+        <tr>
+            <th>Lakás Id</th>
+            <th>Lakáss Neve</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lak : ${lakas}">
+            <td th:text="${lak.id}">terulet</td>
+            <td th:text="${lak.lakasnev}">szobanev</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--Adatok kiiratása-->
+<div class="tableFixHead">
+    <table>
+        <thead>
+        <tr>
+            <th>Szoba Neve</th>
+            <th>Hőmérséklet</th>
+            <th>Páratrtalom</th>
+            <th>Mérés dátuma</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="adat : ${adatok}">
+            <td th:text="${adat.szoba.szobanev}">szobanev</td>
+            <td th:text="${adat.homerseklet}">hőmérséklet</td>
+            <td th:text="${adat.paratartalom}">páratartalom</td>
+            <td th:text="${adat.datum}">dátum</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

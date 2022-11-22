@@ -5,13 +5,21 @@
 <div th:replace="fragments/header :: header (title='Adatok')"></div>
 <body>
 <div th:insert="fragments/login_out :: loggedIn"></div>
-<form th:action="@{/meresek/szobakAdd}" method="post" th:each="szoba : ${szobak}">
-<!--    <input type="hidden" th:field="*{szoba.id}">-->
-        Szoba neve: <input type="text" id="szNev" name="szNev" th:value="*{szoba.szobanev}">
-        Eszköz neve: <input type="text" id="eszNev" name="eszNev" th:value="*{szoba.eszkozok.eszkoznev}">
-        Fűtés típusa: <input type="text" id="futesT" name="futesT" th:value="*{szoba.futes.futestipus}">
-        Szoba területe: <input type="text" id="terulete" name="terulete" th:value="*{szoba.terulet}">
-        Hozzáadás: <input type="submit" id="addSzoba" name="Megváltoztat">
+<!--<form th:action="@{/meresek/szobak/edit/{id}(id=${szoba.id})}" method="post" th:each="szoba : ${szobak}">-->
+<!--&lt;!&ndash;    <input type="hidden" th:field="*{szoba.id}">&ndash;&gt;-->
+<!--        Szoba neve: <input type="text" id="szNev" name="szNev" th:value="*{szoba.szobanev}">-->
+<!--        Eszköz neve: <input type="text" id="eszNev" name="eszNev" th:value="*{szoba.eszkozok.eszkoznev}">-->
+<!--        Fűtés típusa: <input type="text" id="futesT" name="futesT" th:value="*{szoba.futes.futestipus}">-->
+<!--        Szoba területe: <input type="text" id="terulete" name="terulete" th:value="*{szoba.terulet}">-->
+<!--        Hozzáadás: <input type="submit" id="addSzoba" name="Megváltoztat">-->
+<!--</form>-->
+<form th:action="@{/meresek/szobak/edit/{id}(id=${szoba.id})}" method="post" th:object="${szoba}">
+    <!--    <input type="hidden" th:field="*{szoba.id}">-->
+    Szoba neve: <input type="text" id="szNev" name="szNev" th:field="*{szobanev}">
+    Eszköz neve: <input type="text" id="eszNev" name="eszNev" th:field="*{eszkozok.eszkoznev}">
+    Fűtés típusa: <input type="text" id="futesT" name="futesT" th:field="*{futes.futestipus}">
+    Szoba területe: <input type="text" id="terulete" name="terulete" th:field="*{terulet}">
+    Hozzáadás: <input type="submit" id="addSzoba" name="Megváltoztat">
 </form>
 </body>
 </html>

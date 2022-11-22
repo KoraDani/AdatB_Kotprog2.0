@@ -40,6 +40,7 @@ public class LakasRepository {
         return jdbc.update(sql);
     }
 
+    //TODO lakás törlés
     public int delete(int id){
         String sql = "DELETE FROM lakas WHERE lakas.felh_id="+id;
         return jdbc.update(sql);

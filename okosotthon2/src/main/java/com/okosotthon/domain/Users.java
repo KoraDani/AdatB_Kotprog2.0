@@ -1,10 +1,17 @@
 package com.okosotthon.domain;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 //@Entity
 
-public class Users {
+public class Users  {
     /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)*/
     private int id;
@@ -73,4 +80,5 @@ public class Users {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

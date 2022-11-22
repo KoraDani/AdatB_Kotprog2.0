@@ -56,4 +56,12 @@ public class Eszkozok {
     public void setBekapcsolva(int bekapcsolva) {
         this.bekapcsolva = bekapcsolva;
     }
+
+    public Szoba getSzoba() {
+        return szoba;
+    }
+
+    public void setSzoba(Szoba szoba) {
+        this.szoba = szoba;
+    }
 }

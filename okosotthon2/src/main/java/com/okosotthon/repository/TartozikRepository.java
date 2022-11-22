@@ -16,4 +16,9 @@ public class TartozikRepository {
         String sql = "INSERT INTO tartozik (felh_id,lakas_id) VALUES ("+actualUserId+","+select+")";
         return jdbc.update(sql);
     }
+
+    public int deleteUserFromLakas(int id) {
+        String sql = "DELETE FROM tartozik WHERE felh_id="+id;
+        return jdbc.update(sql);
+    }
 }

@@ -5,6 +5,8 @@ import com.okosotthon.repository.EszkozRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EszkozokSzervice {
 
@@ -15,8 +17,8 @@ public class EszkozokSzervice {
         this.eszkozRepository = eszkozRepository;
     }
 
-    public Eszkozok getAllUserEszkoz(int szobaid) {
-        return eszkozRepository.getAllUserEszkoz(szobaid);
+    public List<Eszkozok> getAllUserEszkoz(int id) {
+        return eszkozRepository.getAllUserEszkoz(id);
     }
 
     public Boolean addNewEszkoz(String szobaNev,String eszkozNev) {
@@ -26,5 +28,9 @@ public class EszkozokSzervice {
             return false;
         }
 
+    }
+
+    public void updateNewEszkoz(long id, String eszkoznev) {
+        eszkozRepository.update(id, eszkoznev);
     }
 }

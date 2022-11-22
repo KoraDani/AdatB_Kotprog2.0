@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 //@Slf4j
@@ -52,7 +49,6 @@ public class UserController {
         return "index";
     }
 
-    //TODO megkérdezni hogy ez most hogy is működik
     @GetMapping("/login")
     public String loginForm(Users users,Model model){
         System.out.println("get user" + users.getFelh());
@@ -70,8 +66,7 @@ public class UserController {
     public String loginUser(Users users, Model model){
         System.out.println(users.getFelh()+ " post");
         model.addAttribute("users",new Users());
-        users.setRole("USER");
-        userDetailsService.loadUserByUsername(users.getFelh());
+        users.setRole("ROLE_USER");
         userService.setActualUser(users);
         return "redirect:/szobak/monitor";
     }
@@ -112,7 +107,7 @@ public class UserController {
 
     @GetMapping("/user-data")
     public String userModify(Users users, Model model){
-        model.addAttribute("users", userService.getActualUserList());
+        model.addAttribute("users", userService.getLakasUser());
         return "user-details";
     }
 
@@ -124,7 +119,7 @@ public class UserController {
                                 @RequestParam("newname") String newname,
                                 @RequestParam("newemail") String newemail){
                 userService.updateUserData(oldpwd,newpwd1,newpwd2, newname, newemail);
-        return "user-details";
+        return "redirect:/users/user-data";
     }
 
     @PostMapping("newLakas")
@@ -132,5 +127,13 @@ public class UserController {
         lakasService.addNewLakas(lakasnev);
         tartozikService.addNewTartozik(lakasnev);
         return "user-details";
+    }
+
+    //TODO ha saját magát törli ki kell léptetni
+    @GetMapping("/user/delete/{id}")
+    public String deletUserLakas(@PathVariable int id){
+        System.out.println("delet user from id " + id);
+        tartozikService.deleteUserFromLakas(id);
+        return "redirect:/users/user-data";
     }
 }

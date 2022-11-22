@@ -23,6 +23,9 @@ public class UserService {
         users.add(actualUser);
         return users;
     }
+    public List<Users> getLakasUser() {
+        return usersRepository.getLakasUser(actualUser.getId());
+    }
     public int getActualUserId() {
         return actualUser.getId();
     }
@@ -85,5 +88,9 @@ public class UserService {
 
     public void saveUser(Users users) {
         usersRepository.save(users);
+    }
+
+    public void deleteUserLakas(long id) {
+        usersRepository.deleteUserLakas(id);
     }
 }

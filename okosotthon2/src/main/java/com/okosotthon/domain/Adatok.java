@@ -38,6 +38,15 @@ public class Adatok {
         this.paratartalom = paratartalom;
     }
 
+    public Adatok(long id, int szobaid, int homerseklet, int paratartalom, Date datum, String szobanev){
+        this.id = id;
+        this.szobaid = szobaid;
+        this.homerseklet = homerseklet;
+        this.paratartalom = paratartalom;
+        this.datum = datum;
+        this.szoba = new Szoba(szobanev);
+    }
+
     public long getId() {
         return id;
     }
@@ -76,5 +85,13 @@ public class Adatok {
 
     public void setDatum(Date datum) {
         this.datum = datum;
+    }
+
+    public Szoba getSzoba() {
+        return szoba;
+    }
+
+    public void setSzoba(Szoba szoba) {
+        this.szoba = szoba;
     }
 }

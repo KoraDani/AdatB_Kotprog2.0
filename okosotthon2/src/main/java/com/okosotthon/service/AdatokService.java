@@ -31,4 +31,8 @@ public class AdatokService {
         }
         return uj;
     }
+
+    public List<Adatok> getAllUserAdatok(int id) {
+        return adatokRepository.getAllUserAdatok(id);
+    }
 }

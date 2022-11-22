@@ -60,7 +60,7 @@ public class SzobaRepository {
     }
 
     public List<Szoba> getAllUserSzobaAdat(int lakasid){
-        String sql = "Select szoba.szobaNev, adatok.homerseklet, adatok.paratartalom from szoba INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id INNER JOIN adatok ON szoba.id=adatok.szobaId WHERE tartozik.felh_id="+lakasid+" GROUP BY szoba.szobaNev ORDER BY adatok.datum DESC";
+        String sql = "Select szoba.szobaNev, adatok.homerseklet, adatok.paratartalom from szoba INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id INNER JOIN adatok ON szoba.id=adatok.szobaId WHERE tartozik.felh_id="+lakasid+" GROUP BY szoba.id ORDER BY adatok.datum DESC";
         return jdbc.query(sql,(rs,i)-> new Szoba(
                 rs.getString("szobaNev"),
                 rs.getInt("homerseklet"),
@@ -90,8 +90,8 @@ public class SzobaRepository {
         return jdbc.update(sql);
     }
 
-    public int update(Szoba szoba){
-        String sql = "UPDATE szoba SET szobaNev="+szoba.getSzobanev()+",terulet="+szoba.getTerulet();
+    public int update(long szobaid, String szobanev, int terulet){
+        String sql = "UPDATE szoba SET szobaNev='"+szobanev+"',terulet="+terulet+" WHERE id="+szobaid;
         return jdbc.update(sql);
     }
 

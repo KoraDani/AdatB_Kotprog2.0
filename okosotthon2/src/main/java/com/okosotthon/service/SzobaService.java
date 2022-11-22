@@ -88,4 +88,8 @@ public class SzobaService {
     public List<Szoba> getSelectedSzoba(long id) {
         return szobaRepository.getSelectedSzoba(id);
     }
+
+    public void updateNewSzoba(long id,String szobanev, int terulet) {
+        szobaRepository.update(id,szobanev,terulet);
+    }
 }

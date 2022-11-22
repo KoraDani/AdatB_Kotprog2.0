@@ -25,4 +25,7 @@ public class TartozikService {
     }
 
 
+    public void deleteUserFromLakas(int id) {
+        tartozikRepository.deleteUserFromLakas(id);
+    }
 }

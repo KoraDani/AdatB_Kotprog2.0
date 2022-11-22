@@ -16,20 +16,10 @@ public class AdatokRepository {
     private JdbcTemplate jdbc;
 
     @Autowired
-    public void setJdbc(JdbcTemplate jdbc) {
+    public AdatokRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 
-    public List<Adatok> getAllAdat(){
-        String sql = "select * from adatok";
-        return jdbc.query(sql,(rs, i)-> new Adatok(
-                rs.getInt("id"),
-                rs.getInt("szobaId"),
-                rs.getInt("homerseklet"),
-                rs.getInt("paratartalom"),
-                rs.getDate("datum")
-        ));
-    }
     //
     public List<Adatok> getSzobaAdatok(long szobaID){
         String sql = "SELECT adatok.id, adatok.szobaId, adatok.homerseklet, adatok.paratartalom, adatok.datum, szoba.szobaNev FROM adatok INNER JOIN szoba ON adatok.szobaId=szoba.id WHERE adatok.szobaId="+szobaID+" ORDER by adatok.datum DESC LIMIT 1";
@@ -43,6 +33,7 @@ public class AdatokRepository {
 
     }
 
+    //TODO Adatok CRUD műveletek megcsinálása
     public int save(Adatok adatok){
         String sql = "INSERT INTO adatok (szobaId, homerseklet, paratartalom, datum) VALUES ("+adatok.getSzobaid()+","+adatok.getHomerseklet()+","+adatok.getParatartalom()+","+adatok.getDatum()+")";
         return jdbc.update(sql);
@@ -56,5 +47,17 @@ public class AdatokRepository {
     public int delete(int id){
         String sql = "DELETE FROM adatok WHERE adatok.id="+id;
         return jdbc.update(sql);
+    }
+
+    public List<Adatok> getAllUserAdatok(int id) {
+        String sql = "select adatok.id, adatok.szobaId, adatok.homerseklet, adatok.paratartalom, adatok.datum, szoba.szobaNev from adatok INNER JOIN szoba ON adatok.szobaId=szoba.id INNER JOIN lakas ON lakas.id=szoba.lakas_id INNER JOIN tartozik ON tartozik.lakas_id=lakas.id WHERE tartozik.felh_id="+id;
+        return jdbc.query(sql,(rs, i)-> new Adatok(
+                rs.getInt("id"),
+                rs.getInt("szobaId"),
+                rs.getInt("homerseklet"),
+                rs.getInt("paratartalom"),
+                rs.getDate("datum"),
+                rs.getString("szobaNev")
+        ));
     }
 }

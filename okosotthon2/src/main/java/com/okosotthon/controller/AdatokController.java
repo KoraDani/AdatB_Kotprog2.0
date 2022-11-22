@@ -11,11 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/meresek")
 public class AdatokController {
-
+    private UserService userService;
     private SzobaService szobaService;
     private EszkozokSzervice eszkozokSzervice;
     private FutesService futesService;
+    private AdatokService adatokService;
+    private LakasService lakasService;
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     @Autowired
     public void setSzobaService(SzobaService szobaService) {
         this.szobaService = szobaService;
@@ -27,6 +33,14 @@ public class AdatokController {
     @Autowired
     public void setFutesService(FutesService futesService) {
         this.futesService = futesService;
+    }
+    @Autowired
+    public void setAdatokService(AdatokService adatokService) {
+        this.adatokService = adatokService;
+    }
+    @Autowired
+    public void setLakasService(LakasService lakasService) {
+        this.lakasService = lakasService;
     }
 
     @GetMapping("/szobak")
@@ -54,20 +68,33 @@ public class AdatokController {
         szobaService.deleteSzoba(id);
         return "redirect:/meresek/szobak";
     }
+
     @GetMapping("/szobak/edit/{id}")
     public String editSzobaFrom(@PathVariable long id, Model model){
         Szoba szoba = szobaService.getSelectedSzoba(id).get(0);
-        model.addAttribute("szobak", szoba);
+        model.addAttribute("szoba", szoba);
         return "szobaEdit";
     }
 
-    //TODO updatere kicserélni
     @PostMapping("/szobak/edit/{id}")
-    public String editSzoba(Szoba szoba, BindingResult result){
-        szobaService.addNewSzoba(szoba.getSzobanev(),szoba.getTerulet());
-        eszkozokSzervice.addNewEszkoz(szoba.getSzobanev(),szoba.getEszkozok().getEszkoznev());
-        futesService.addNewFutes(szoba.getSzobanev(),szoba.getFutes().getFutestipus());
-        return "szoba-list";
+    public String editSzoba(@PathVariable long id,Szoba szoba, BindingResult result){
+        System.out.println("update szoba.get id " +szoba.getId());
+        System.out.println("update szoba id " + id);
+        szobaService.updateNewSzoba(id,szoba.getSzobanev(),szoba.getTerulet());
+        eszkozokSzervice.updateNewEszkoz(id,szoba.getEszkozok().getEszkoznev());
+        futesService.updateNewFutes(id,szoba.getFutes().getFutestipus());
+        return "redirect:/meresek/szobak";
+    }
+
+    @GetMapping("/reszletesebb")
+    public String reszletesAdatok(Model model){
+        int id = userService.getActualUserId();
+        model.addAttribute("szobak", szobaService.getAllUserSzoba());
+        model.addAttribute("eszkozok",eszkozokSzervice.getAllUserEszkoz(id));
+        model.addAttribute("futes", futesService.getAllUserFutes(id));
+        model.addAttribute("lakas",lakasService.getUserLakas(id));
+        model.addAttribute("adatok",adatokService.getAllUserAdatok(id));
+        return "reszletes";
     }
 
 }
